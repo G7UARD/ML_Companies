@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-class Dataloader:
+class DataLoader:
     """Class for loading data from different forms of data (CSV, Excel and more)"""
 
     def __init__(self, file_path):
@@ -9,12 +9,13 @@ class Dataloader:
         self.data = None
 
     def load_csv(self):
-        if os.path.exists(self.file_path):
-            self_data = pd.read_csv(self.file_path)
-            print(f"You've succsesfully downloaded data from {self.file_path}")
+        absolute_path = os.path.abspath(self.file_path)
+        if os.path.exists(absolute_path):
+            self_data = pd.read_csv(absolute_path)
+            print(f"You've succsesfully downloaded data from {absolute_path}")
             return self.data
         else:
-            print("Error: File didn't found")
+            print(f"Error: File didn't found in path {absolute_path}")
             return None
     
     def get_basic_stats(self):
@@ -24,7 +25,7 @@ class Dataloader:
             print("Data haven't downloaded")
 
     if __name__ == "__main__":
-        loader = DataLoader("C:/Users/timur/Desktop/CDV inf/Coding/Projects/ML_Companies/data/100_largest_companies.csv")
+        loader = DataLoader("C:/Users/timur/Desktop/CDV inf/Coding/Projects/ML_Companies/data/100_largest_companies")
         df = loader.load_csv()
         if df is not None:
             print(loader.get_basic_stats())
